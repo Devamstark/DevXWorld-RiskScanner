@@ -2,13 +2,21 @@
   "manifest_version": 3,
   "name": "DevXWorld Risk Scanner",
   "version": "1.0",
-  "description": "AI-powered extension to assess the risk of websites.",
-  "permissions": ["tabs", "scripting", "activeTab"],
-  "action": {
-    "default_popup": "popup.html",
-    "default_icon": "icons/icon.png"
-  },
+  "description": "Scan website risk using AI heuristics",
+  "permissions": [
+    "tabs",
+    "scripting",
+    "storage",
+    "notifications"
+  ],
   "background": {
     "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  },
+  "icons": {
+    "48": "icon.png"
   }
 }
