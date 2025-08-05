@@ -1,25 +1,18 @@
-chrome.runtime.sendMessage({ action: "getPageContent" }, async (response) => {
-  if (!response || !response.content) {
-    document.getElementById("status").textContent = "Failed to get page content";
-    return;
-  }
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "getPageContent") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (!tabs || tabs.length === 0) {
+        sendResponse({ content: null });
+        return;
+      }
 
-  try {
-    const res = await fetch("https://devxworld-riskscanner.onrender.com/analyze", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ html: response.content }),
-    });
+      const tabId = tabs[0].id;
 
-    const data = await res.json();
-
-    document.getElementById("score").textContent = `${data.score} / 100`;
-    document.getElementById("verdict").textContent = data.verdict;
-    document.getElementById("status").textContent = "AI Scan Complete ✅";
-
-  } catch (error) {
-    document.getElementById("status").textContent = "Error analyzing page.";
-    document.getElementById("score").textContent = "-- / 100";
-    document.getElementById("verdict").textContent = "--";
-  }
-});
+      chrome.scripting.executeScript(
+        {
+          target: { tabId: tabId },
+          func: () => document.documentElement.outerHTML,
+        },
+        (results) => {
+          if (!results || !results[0]) {
+            sendRespons
