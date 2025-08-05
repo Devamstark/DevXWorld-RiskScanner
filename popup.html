@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,20 +8,29 @@
 </head>
 <body>
   <div class="container">
-    <h1>DevXWorld 🔐</h1>
-    <p id="status" class="status">Analyzing website...</p>
+    <header>
+      <img src="icon.png" alt="DevXWorld Logo" class="logo" />
+      <h1>DevXWorld</h1>
+      <p class="subtitle">Website Cyber Risk Scanner</p>
+    </header>
 
-    <div class="card">
-      <h2>Risk Score</h2>
-      <div id="score" class="score">-- / 100</div>
-    </div>
+    <main>
+      <p id="status" class="status">Analyzing website...</p>
 
-    <div class="card">
-      <h2>Verdict</h2>
-      <div id="verdict" class="verdict">--</div>
-    </div>
+      <div class="card">
+        <h2>Risk Score</h2>
+        <div id="score" class="score">-- / 100</div>
+      </div>
 
-    <footer>⚡ AI-powered by DevXWorld</footer>
+      <div class="card">
+        <h2>Verdict</h2>
+        <div id="verdict" class="verdict">--</div>
+      </div>
+    </main>
+
+    <footer>
+      ⚡ AI-powered by <strong>DevXWorld</strong>
+    </footer>
   </div>
 
   <script src="popup.js"></script>
