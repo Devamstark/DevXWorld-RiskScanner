@@ -1,27 +1,25 @@
-// Add this at the top or bottom of your existing background.js file
+chrome.runtime.sendMessage({ action: "getPageContent" }, async (response) => {
+  if (!response || !response.content) {
+    document.getElementById("status").textContent = "Failed to get page content";
+    return;
+  }
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "getPageContent") {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (!tabs || tabs.length === 0) {
-        sendResponse({ content: null });
-        return;
-      }
-      const tabId = tabs[0].id;
-      chrome.scripting.executeScript(
-        {
-          target: { tabId: tabId },
-          func: () => document.documentElement.outerHTML,
-        },
-        (results) => {
-          if (chrome.runtime.lastError || !results || !results[0]) {
-            sendResponse({ content: null });
-          } else {
-            sendResponse({ content: results[0].result });
-          }
-        }
-      );
+  try {
+    const res = await fetch("https://devxworld-riskscanner.onrender.com/analyze", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ html: response.content }),
     });
-    return true;  // keep sendResponse alive for async response
+
+    const data = await res.json();
+
+    document.getElementById("score").textContent = `${data.score} / 100`;
+    document.getElementById("verdict").textContent = data.verdict;
+    document.getElementById("status").textContent = "AI Scan Complete ✅";
+
+  } catch (error) {
+    document.getElementById("status").textContent = "Error analyzing page.";
+    document.getElementById("score").textContent = "-- / 100";
+    document.getElementById("verdict").textContent = "--";
   }
 });
