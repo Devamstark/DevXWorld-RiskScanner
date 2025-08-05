@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       chrome.scripting.executeScript(
         {
           target: { tabId: tabs[0].id },
-          func: () => document.documentElement.innerHTML,
+          func: () => document.documentElement.outerHTML,
         },
         (injectionResults) => {
           if (injectionResults && injectionResults[0]) {
@@ -16,6 +16,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       );
     });
 
-    return true; // Will respond asynchronously
+    return true; // async response
   }
 });
