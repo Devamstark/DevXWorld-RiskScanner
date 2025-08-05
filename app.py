@@ -1,37 +1,28 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+
 def ai_score(text):
     score = 0
-
     text_lower = text.lower()
+    if "password" in text_lower: score += 30
+    if "login" in text_lower: score += 20
+    if "verify" in text_lower: score += 10
+    return min(score, 100)
 
-    # Penalize if not HTTPS
-    if "https://" not in text_lower:
-        score += 30
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    data = request.json
+    html = data.get("html", "")
+    score = ai_score(html)
+    verdict = "Safe"
+    if score > 60:
+        verdict = "High Risk"
+    elif score > 30:
+        verdict = "Caution"
+    return jsonify({"score": score, "verdict": verdict})
 
-    # Count suspicious keywords frequency
-    keywords = {
-        "password": 20,
-        "login": 15,
-        "verify": 15,
-        "update": 10,
-        "bank": 25,
-        "credentials": 20,
-    }
-
-    for kw, points in keywords.items():
-        count = text_lower.count(kw)
-        score += min(count * points, points * 3)  # max triple points for repeated keywords
-
-    # Count number of script tags
-    script_count = text_lower.count("<script")
-    if script_count > 5:
-        score += 10 + (script_count - 5) * 2  # extra penalty for many scripts
-
-    # Penalize if iframe used (common in phishing)
-    if "iframe" in text_lower:
-        score += 15
-
-    # Clamp score to max 100
-    if score > 100:
-        score = 100
-
-    return int(score)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
