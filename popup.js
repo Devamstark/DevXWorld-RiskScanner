@@ -1,5 +1,3 @@
-// Existing scan logic (make sure it's here as before)
-
 chrome.runtime.sendMessage({ action: "getPageContent" }, async (response) => {
   if (!response || !response.content) {
     document.getElementById("status").textContent = "Failed to get page content";
@@ -13,7 +11,7 @@ chrome.runtime.sendMessage({ action: "getPageContent" }, async (response) => {
       body: JSON.stringify({ html: response.content }),
     });
 
-    if (!res.ok) throw new Error(`API error: ${res.status}`);
+    if (!res.ok) throw new Error("API failed");
 
     const data = await res.json();
 
@@ -21,7 +19,6 @@ chrome.runtime.sendMessage({ action: "getPageContent" }, async (response) => {
 
     const verdictEl = document.getElementById("verdict");
     verdictEl.textContent = data.verdict;
-
     verdictEl.classList.remove("safe", "caution", "risk");
 
     if (data.verdict === "Safe") verdictEl.classList.add("safe");
@@ -31,35 +28,9 @@ chrome.runtime.sendMessage({ action: "getPageContent" }, async (response) => {
     document.getElementById("status").textContent = "AI Scan Complete ✅";
 
   } catch (error) {
-    console.error("Error fetching AI data:", error);
+    console.error(error);
     document.getElementById("status").textContent = "Error analyzing page.";
     document.getElementById("score").textContent = "-- / 100";
     document.getElementById("verdict").textContent = "--";
   }
-});
-
-// Feedback form logic
-
-document.getElementById('feedbackBtn').addEventListener('click', () => {
-  const form = document.getElementById('feedbackForm');
-  form.style.display = form.style.display === 'none' ? 'block' : 'none';
-});
-
-document.getElementById('submitFeedback').addEventListener('click', () => {
-  const feedback = document.getElementById('feedbackText').value.trim();
-  if (feedback === '') {
-    alert('Please enter feedback');
-    return;
-  }
-
-  // Store feedback locally (chrome.storage.sync)
-  chrome.storage.sync.get({ feedbacks: [] }, (result) => {
-    const newFeedbacks = result.feedbacks;
-    newFeedbacks.push({ feedback: feedback, date: new Date().toISOString() });
-    chrome.storage.sync.set({ feedbacks: newFeedbacks }, () => {
-      alert('Thanks for your feedback!');
-      document.getElementById('feedbackText').value = '';
-      document.getElementById('feedbackForm').style.display = 'none';
-    });
-  });
 });
