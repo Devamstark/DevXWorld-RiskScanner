@@ -22,7 +22,6 @@ An AI-inspired browser extension that evaluates website risk based on page conte
 5. Visit any website and click the extension icon
 
 ## 📷 Screenshots
-*(Add screenshots of the popup or score UI)*
 
 ## 🤝 Author
 Devam Trivedi – [LinkedIn](https://www.linkedin.com/in/devamstark/)  
