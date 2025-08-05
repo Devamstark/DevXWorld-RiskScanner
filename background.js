@@ -1,7 +1,5 @@
-// Listen for message from popup.js
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "getPageContent") {
-    // Use chrome.scripting.executeScript to get page HTML content
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.scripting.executeScript(
         {
@@ -18,7 +16,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       );
     });
 
-    // Return true to indicate async response
-    return true;
+    return true; // Will respond asynchronously
   }
 });
