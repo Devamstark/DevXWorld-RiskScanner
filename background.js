@@ -5,9 +5,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({ content: null });
         return;
       }
-
       const tabId = tabs[0].id;
-
       chrome.scripting.executeScript(
         {
           target: { tabId: tabId },
@@ -22,7 +20,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         }
       );
     });
-
-    return true; // keeps sendResponse alive for async call
+    return true; // keeps sendResponse alive for async
   }
 });
