@@ -4,6 +4,9 @@
   "version": "1.0",
   "description": "Scan website risk using AI heuristics",
   "permissions": ["scripting", "tabs"],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "background": {
     "service_worker": "background.js"
   },
