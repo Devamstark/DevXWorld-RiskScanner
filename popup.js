@@ -1,6 +1,4 @@
 chrome.runtime.sendMessage({ action: "getPageContent" }, async (response) => {
-  console.log("📄 Page content response:", response);
-
   if (!response || !response.content) {
     document.getElementById("status").textContent = "Failed to get page content";
     return;
@@ -13,12 +11,9 @@ chrome.runtime.sendMessage({ action: "getPageContent" }, async (response) => {
       body: JSON.stringify({ html: response.content }),
     });
 
-    console.log("🌐 API response status:", res.status);
-
     if (!res.ok) throw new Error("API failed");
 
     const data = await res.json();
-    console.log("✅ API result:", data);
 
     document.getElementById("score").textContent = `${data.score} / 100`;
 
@@ -33,7 +28,7 @@ chrome.runtime.sendMessage({ action: "getPageContent" }, async (response) => {
     document.getElementById("status").textContent = "AI Scan Complete ✅";
 
   } catch (error) {
-    console.error("❌ Error fetching AI result:", error);
+    console.error("Error fetching AI result:", error);
     document.getElementById("status").textContent = "Error analyzing page.";
     document.getElementById("score").textContent = "-- / 100";
     document.getElementById("verdict").textContent = "--";

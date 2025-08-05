@@ -1,91 +1,70 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(to bottom right, #f0f4f8, #e2e8f0);
-  color: #1f2937;
+  background: #f8fafc;
   margin: 0;
   padding: 0;
   width: 300px;
-  transition: all 0.3s ease-in-out;
+  color: #111827;
 }
 
 .container {
   padding: 20px;
-  text-align: center;
-  animation: fadeIn 0.6s ease;
 }
 
 h1 {
-  font-size: 20px;
+  font-size: 1.4em;
+  text-align: center;
+  color: #2563eb;
   margin-bottom: 10px;
-  color: #111827;
 }
 
 .status {
-  font-size: 14px;
-  margin-bottom: 20px;
-  color: #6b7280;
-  transition: color 0.3s ease;
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 15px;
+  color: #4b5563;
 }
 
 .card {
   background: white;
-  border-radius: 14px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
-  padding: 16px;
-  margin: 12px 0;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
 }
 
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-}
-
-.card h2 {
-  font-size: 14px;
-  margin-bottom: 6px;
-  color: #6b7280;
+h2 {
+  font-size: 1.1em;
+  margin-bottom: 5px;
+  color: #374151;
 }
 
 .score {
-  font-size: 26px;
-  font-weight: 600;
-  color: #2563eb;
-  transition: color 0.4s ease;
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #111827;
 }
 
 .verdict {
-  font-size: 18px;
+  font-size: 1.2em;
   font-weight: bold;
-  padding: 5px 10px;
-  border-radius: 8px;
-  display: inline-block;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Verdict Colors (you will set these via JS) */
 .verdict.safe {
-  background-color: #dcfce7;
   color: #16a34a;
 }
 
 .verdict.caution {
-  background-color: #fef3c7;
-  color: #d97706;
+  color: #f59e0b;
 }
 
 .verdict.risk {
-  background-color: #fee2e2;
-  color: #b91c1c;
+  color: #dc2626;
 }
 
-.footer {
+footer {
+  text-align: center;
+  font-size: 0.8em;
+  color: #6b7280;
   margin-top: 20px;
-  font-size: 12px;
-  color: #9ca3af;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
 }

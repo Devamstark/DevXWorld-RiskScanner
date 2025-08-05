@@ -3,12 +3,7 @@
   "name": "DevXWorld Risk Scanner",
   "version": "1.0",
   "description": "Scan website risk using AI heuristics",
-  "permissions": [
-    "tabs",
-    "scripting",
-    "storage",
-    "notifications"
-  ],
+  "permissions": ["scripting", "tabs"],
   "background": {
     "service_worker": "background.js"
   },

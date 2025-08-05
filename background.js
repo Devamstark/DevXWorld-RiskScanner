@@ -15,4 +15,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         },
         (results) => {
           if (!results || !results[0]) {
-            sendRespons
+            sendResponse({ content: null });
+          } else {
+            sendResponse({ content: results[0].result });
+          }
+        }
+      );
+    });
+
+    return true; // keeps sendResponse alive for async call
+  }
+});
