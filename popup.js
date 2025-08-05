@@ -1,21 +1,17 @@
 chrome.runtime.sendMessage({ action: "getPageContent" }, async (response) => {
   if (!response || !response.content) {
     document.getElementById("status").textContent = "Failed to get page content";
-    document.getElementById("score").textContent = "-- / 100";
-    document.getElementById("verdict").textContent = "--";
     return;
   }
 
-  const content = response.content;
-
   try {
-    const res = await fetch("https://devxworld-ai-risk-api.onrender.com/analyze", {
+    const res = await fetch("https://devxworld-riskscanner.onrender.com/analyze", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ html: content }),
+      body: JSON.stringify({ html: response.content }),
     });
 
-    if (!res.ok) throw new Error("API response error");
+    if (!res.ok) throw new Error(`API error: ${res.status}`);
 
     const data = await res.json();
 
@@ -33,9 +29,9 @@ chrome.runtime.sendMessage({ action: "getPageContent" }, async (response) => {
     document.getElementById("status").textContent = "AI Scan Complete ✅";
 
   } catch (error) {
+    console.error("Error fetching AI data:", error);
     document.getElementById("status").textContent = "Error analyzing page.";
     document.getElementById("score").textContent = "-- / 100";
     document.getElementById("verdict").textContent = "--";
-    console.error(error);
   }
 });
