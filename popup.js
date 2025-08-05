@@ -1,5 +1,4 @@
-// Send a message to background.js to get current tab's page content
-chrome.runtime.sendMessage({ action: "getPageContent" }, (response) => {
+chrome.runtime.sendMessage({ action: "getPageContent" }, async (response) => {
   if (!response || !response.content) {
     document.getElementById("status").textContent = "Failed to get page content";
     return;
@@ -7,21 +6,25 @@ chrome.runtime.sendMessage({ action: "getPageContent" }, (response) => {
 
   const content = response.content;
 
-  // Simple risk scoring rules
-  let score = 0;
-  if (!content.includes("https")) score += 20;
-  if (content.match(/password/i)) score += 15;
-  if (content.match(/login|verify|update|bank|credentials/i)) score += 20;
-  if ((content.match(/<script/g) || []).length > 5) score += 10;
-  if (content.match(/iframe/i)) score += 15;
+  const res = await fetch("https://devxworld-ai-risk-api.onrender.com/analyze", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ html: content })
+  });
 
-  // Update UI
-  document.getElementById("score").textContent = score;
+  const data = await res.json();
+  document.getElementById("score").textContent = `${data.score} / 100`;
 
-  let verdict = "Safe 🟢";
-  if (score >= 70) verdict = "High Risk 🔴";
-  else if (score >= 40) verdict = "Caution 🟡";
+  const verdictEl = document.getElementById("verdict");
+  verdictEl.textContent = data.verdict;
 
-  document.getElementById("verdict").textContent = verdict;
-  document.getElementById("status").textContent = "Scan Complete";
+  // Remove old verdict class
+  verdictEl.classList.remove("safe", "caution", "risk");
+
+  // Add new one based on verdict
+  if (data.verdict === "Safe") verdictEl.classList.add("safe");
+  else if (data.verdict === "Caution") verdictEl.classList.add("caution");
+  else if (data.verdict === "High Risk") verdictEl.classList.add("risk");
+
+  document.getElementById("status").textContent = "AI Scan Complete ✅";
 });

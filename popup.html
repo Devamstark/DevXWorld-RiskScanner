@@ -1,14 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DevXWorld Risk Scanner</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>DevXWorld</h1>
-  <p id="status">Analyzing...</p>
-  <h2>Risk Score: <span id="score">--</span>/100</h2>
-  <p id="verdict"></p>
+  <div class="container">
+    <h1>DevXWorld 🔐</h1>
+    <p class="status" id="status">Analyzing website...</p>
+
+    <div class="card">
+      <h2>Risk Score</h2>
+      <div class="score" id="score">-- / 100</div>
+    </div>
+
+    <div class="card">
+      <h2>Verdict</h2>
+      <div class="verdict" id="verdict">--</div>
+    </div>
+
+    <p class="footer">Powered by DevXWorld AI</p>
+  </div>
+
   <script src="popup.js"></script>
 </body>
 </html>

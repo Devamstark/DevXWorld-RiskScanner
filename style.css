@@ -1,20 +1,91 @@
 body {
-  font-family: Arial, sans-serif;
-  width: 250px;
-  padding: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom right, #f0f4f8, #e2e8f0);
+  color: #1f2937;
+  margin: 0;
+  padding: 0;
+  width: 300px;
+  transition: all 0.3s ease-in-out;
+}
+
+.container {
+  padding: 20px;
+  text-align: center;
+  animation: fadeIn 0.6s ease;
 }
 
 h1 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+.status {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #6b7280;
+  transition: color 0.3s ease;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+  padding: 16px;
+  margin: 12px 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #6b7280;
+}
+
+.score {
+  font-size: 26px;
+  font-weight: 600;
+  color: #2563eb;
+  transition: color 0.4s ease;
+}
+
+.verdict {
   font-size: 18px;
-  color: #333;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 8px;
+  display: inline-block;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-#score {
-  font-size: 24px;
-  font-weight: bold;
+/* Verdict Colors (you will set these via JS) */
+.verdict.safe {
+  background-color: #dcfce7;
+  color: #16a34a;
 }
 
-#verdict {
-  font-weight: bold;
-  margin-top: 10px;
+.verdict.caution {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.verdict.risk {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.footer {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
