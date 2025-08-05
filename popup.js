@@ -4,14 +4,17 @@ chrome.runtime.sendMessage({ action: "getPageContent" }, async (response) => {
     return;
   }
 
+  const selectedModel = document.getElementById("modelSelect").value;
+
   try {
     const res = await fetch("https://devxworld-riskscanner.onrender.com/analyze", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ html: response.content }),
+      body: JSON.stringify({
+        html: response.content,
+        model: selectedModel
+      }),
     });
-
-    if (!res.ok) throw new Error("API failed");
 
     const data = await res.json();
 
